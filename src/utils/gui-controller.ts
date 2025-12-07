@@ -18,8 +18,8 @@ type GuiControllerSettings = {
 	PopUp?: boolean;
 	IgnoreGuiInset?: boolean;
 	DisplayOrder?: number;
+	ResetOnSpawn?: boolean;
 };
-
 
 class GuiController {
 	public namespace: string;
@@ -30,11 +30,7 @@ class GuiController {
 		Visible: atom<boolean>(false),
 	};
 
-	constructor(
-		Namespace: string,
-		Gui: GuiBase<string>,
-		CustomSettings: GuiControllerSettings,
-	) {
+	constructor(Namespace: string, Gui: GuiBase<string>, CustomSettings: GuiControllerSettings) {
 		this.namespace = Namespace;
 		this._gui = Gui;
 		this._settings = {
@@ -50,6 +46,7 @@ class GuiController {
 			IgnoreGuiInset: this._settings.IgnoreGuiInset,
 			ZIndexBehavior: Enum.ZIndexBehavior.Sibling,
 			DisplayOrder: this._settings.DisplayOrder,
+			ResetOnSpawn: this._settings.ResetOnSpawn === undefined ? false : this._settings.ResetOnSpawn,
 		});
 
 		if (this._settings.CanHide !== false) {
